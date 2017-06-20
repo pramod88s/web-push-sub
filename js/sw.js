@@ -6,7 +6,9 @@
 /* eslint-disable max-len */
 
 const applicationServerPublicKey = 'BKuXoVOSp6LD7S0z4s0tPESi2cfjiVyBSE9SjwHISuWyEDk3yg_ivjNIX-QINEljHiNDl7Y78jEU1Z7nCKSIHBs';
-
+const notificationSettingUrl = 'https://pramod88s.github.io/web-push-sub/';
+const settingIconUrl = 'https://pramod88s.github.io/web-push-sub/images/settings.png';
+const siteIconUrl = 'https://pbs.twimg.com/profile_images/826320015024672768/Fm3wsT1s_normal.jpg';
 /* eslint-enable max-len */
 
 function urlB64ToUint8Array(base64String) {
@@ -36,22 +38,50 @@ self.addEventListener('push', function(event) {
         body: event.data.json().message,
         icon: iconData,
         badge: badgeData,
+        vibrate: [300, 100, 400], // Vibrate 300ms, pause 100ms, then vibrate 400ms
         data: {
         	url: event.data.json().data.url
-        }	
+        },
+        requireInteraction: true,
+        actions: [
+            {action: 'settings', title: 'Settings', icon: settingIconUrl},
+            {action: 'readmore', title: ('Visit TOI Sports'), icon: siteIconUrl}
+        ]
     };
 
     event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener('notificationclick', function(event) {
-    console.log('[Service Worker] Notification click Received.');
+//    console.log('[Service Worker] Notification click Received.');
     
     event.notification.close();
 
-    event.waitUntil(
+   /* event.waitUntil(
         clients.openWindow(event.notification.data.url)
-    );
+    );*/
+    
+    // This looks to see if the current is already open and  
+    // focuses if it is  
+    event.waitUntil(
+            clients.matchAll({
+                type: "window"
+            })
+            .then(function (clientList) {
+                for (var i = 0; i < clientList.length; i++) {
+                    var client = clientList[i];
+                    if (client.url == '/' && 'focus' in client)
+                        return client.focus();
+                }
+                if (clients.openWindow) {
+                    if (event.action === 'settings') {
+                        return clients.openWindow(notificationSettingUrl);                        
+                    } else {
+                        return clients.openWindow(event.notification.data.url);    
+                    }
+                }
+            })
+            );
 });
 
 self.addEventListener('pushsubscriptionchange', function(event) {

@@ -5,8 +5,8 @@
 const applicationServerPublicKey = 'BKuXoVOSp6LD7S0z4s0tPESi2cfjiVyBSE9SjwHISuWyEDk3yg_ivjNIX-QINEljHiNDl7Y78jEU1Z7nCKSIHBs';
 
 var domain = "web.tech.lahiru";
-var pushServerRegUrl = "http://wap.indiatimes.com/web-push-sender/register";
-var pushServerUnregUrl = "http://wap.indiatimes.com/web-push-sender/unregister";
+var pushServerRegUrl = "http://localhost:9999/web-push-sender/register";
+var pushServerUnregUrl = "http://localhost:9999/web-push-sender/unregister";
 var ua = window.navigator.userAgent,
 safariTxt = ua.indexOf ( "Safari" ),
 chrome = ua.indexOf ( "Chrome" ),
@@ -183,6 +183,7 @@ function subscribeUser() {
         updateBtn();
         // Show subscription for debug
         console.log('Subscription details:',JSON.stringify(subscription));
+        onRegisterNotify(swRegistration);
     })
     .catch(function(err) {
     console.log('Failed to subscribe the user: ', err);
@@ -276,6 +277,26 @@ function safariIniti() {
         window.prompt('Subscription details:',token);
     } else if(pResult.permission === 'denied') {
         alert("Permission for " + domain + " is " + pResult.permission);
+    }
+}
+
+function onRegisterNotify(reg) {
+    try {
+        var notification = reg.showNotification('TOI', {
+            body: 'Thank you for subscribing to TOI Sports News alerts.',
+            icon: 'https://pbs.twimg.com/profile_images/826320015024672768/Fm3wsT1s_normal.jpg',
+            vibrate: [300, 100, 400], // Vibrate 300ms, pause 100ms, then vibrate 400ms
+            tag: 'toisportsnews-welcome',
+            data: {
+                url: 'http://timesofindia.indiatimes.com/sports'
+            }
+        });
+        notification.onclick = function (event) {
+            event.target.close();
+            window.location.href = event.target.data.url;
+            return;
+        };
+    } catch (err) {/*log this error alert(err.message)*/
     }
 }
 
