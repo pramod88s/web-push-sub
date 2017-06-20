@@ -1,0 +1,48 @@
+<!--
+  Visit Github page[Browser-push](https://lahiiru.github.io/browser-push) for guide lines.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Push</title>
+</head>
+
+<body>
+<header>
+  <h1>Browser Push</h1>
+</header>
+
+<p>
+  <div id="browser-details">
+    Browser detect script not finished yet.
+  </div>
+</p>
+
+<p>
+  Press following button to subscribe / un-subscribe for push notifications.
+  Keep developer console open to see logs when script is loading. Then click next action button<br><br>
+  <!-- <button onclick="inject()">Load script</button> -->
+  <button class="action-button">Script not loaded</button>
+</p>
+
+<script src="js/main.js"></script>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+    /*
+     * Load script when button is pressed.
+     */
+     /* function inject() {
+       (
+           function (a,b,c,d) {
+             b.type= c;
+             b.src= d;
+             a.appendChild(b);
+       })
+       (document.getElementsByTagName('head')[0], document.createElement('script'), 'text/javascript', 'js/main.js');
+     } */
+</script>
+</body>
+</html>
