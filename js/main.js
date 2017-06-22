@@ -5,8 +5,8 @@
 const applicationServerPublicKey = 'BKuXoVOSp6LD7S0z4s0tPESi2cfjiVyBSE9SjwHISuWyEDk3yg_ivjNIX-QINEljHiNDl7Y78jEU1Z7nCKSIHBs';
 
 var domain = "web.tech.lahiru";
-var pushServerRegUrl = "http://wap.indiatimes.com/web-push-sender/register";
-var pushServerUnregUrl = "http://wap.indiatimes.com/web-push-sender/unregister";
+var pushServerRegUrl = "http://localhost:9999/web-push-sender/register";
+var pushServerUnregUrl = "http://localhost:9999/web-push-sender/unregister";
 var ua = window.navigator.userAgent,
 safariTxt = ua.indexOf ( "Safari" ),
 chrome = ua.indexOf ( "Chrome" ),
@@ -242,7 +242,7 @@ function nonSafariInit(){
         actionButton.addEventListener('click',function(){
             subscribe();
         });
-        navigator.serviceWorker.register('js/sw.js').then(function(swReg) {
+        navigator.serviceWorker.register('js/service-worker-wp.js').then(function(swReg) {
             console.log('Service Worker is registered', swReg);
             actionButton.innerText='Enable Push Messaging';
             swRegistration = swReg;
