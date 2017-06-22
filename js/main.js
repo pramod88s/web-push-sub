@@ -5,8 +5,8 @@
 const applicationServerPublicKey = 'BKuXoVOSp6LD7S0z4s0tPESi2cfjiVyBSE9SjwHISuWyEDk3yg_ivjNIX-QINEljHiNDl7Y78jEU1Z7nCKSIHBs';
 
 var domain = "web.tech.lahiru";
-var pushServerRegUrl = "http://localhost:9999/web-push-sender/register";
-var pushServerUnregUrl = "http://localhost:9999/web-push-sender/unregister";
+var pushServerRegUrl = "http://223.165.26.120:8181/web-push-sender/register";
+var pushServerUnregUrl = "http://223.165.26.120:8181/web-push-sender/unregister";
 var ua = window.navigator.userAgent,
 safariTxt = ua.indexOf ( "Safari" ),
 chrome = ua.indexOf ( "Chrome" ),
